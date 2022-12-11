@@ -4,9 +4,10 @@ import { csv, DSVRowArray, max, scaleBand, scaleLinear } from 'd3';
 import AxisLeft from '../components/AxisLeft';
 import AxisBottom from '../components/AxisBottom';
 import Marks from '../components/Marks';
+import { ChartContainer } from '../styles/BarChart';
 
 export default function Home({ data }: { data: DSVRowArray<string> }) {
-  const width = 900;
+  const width = 1250;
   const height = 560;
 
   const margin = { top: 40, right: 40, bottom: 40, left: 80 };
@@ -27,7 +28,7 @@ export default function Home({ data }: { data: DSVRowArray<string> }) {
     const xScale = scaleBand().domain(data.map(xValue)).range([0, innerWidth]);
 
     return (
-      <>
+      <ChartContainer>
         <Head>
           <title>Visão Geral</title>
         </Head>
@@ -50,7 +51,7 @@ export default function Home({ data }: { data: DSVRowArray<string> }) {
             />
           </g>
         </svg>
-      </>
+      </ChartContainer>
     );
   }
 }

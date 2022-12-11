@@ -24,7 +24,7 @@ const Marks = ({
             key={index}
             x={xScale(xValue(d))}
             y={yScale(yValue(d))}
-            width={xScale.bandwidth()}
+            width={xScale.bandwidth() / 1.3}
             height={innerHeight - yScale(+d['Coberturas Vacinais'])}
           ></rect>
         ) : (
