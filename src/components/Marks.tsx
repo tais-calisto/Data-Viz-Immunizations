@@ -8,6 +8,7 @@ const Marks = ({
   innerHeight,
   yValue,
   xValue,
+  tooltipFormat,
 }: {
   data: DSVRowArray<string>;
   yScale: ScaleLinear<number, number, never>;
@@ -15,6 +16,7 @@ const Marks = ({
   innerHeight: number;
   yValue: (data: any) => number;
   xValue: (d: any) => string;
+  tooltipFormat: (d: any) => string;
 }) => {
   return (
     <>
@@ -27,9 +29,7 @@ const Marks = ({
             width={xScale.bandwidth() / 1.3}
             height={innerHeight - yScale(+d['Coberturas Vacinais'])}
           >
-            <title>
-              Cobertura vacinal no ano {xValue(d)}: {yValue(d)}%
-            </title>
+            <title>{tooltipFormat(d)}</title>
           </rect>
         ) : (
           ''

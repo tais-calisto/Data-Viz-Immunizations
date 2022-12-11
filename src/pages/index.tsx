@@ -1,6 +1,13 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { csv, DSVRowArray, max, scaleBand, scaleLinear } from 'd3';
+import {
+  csv,
+  DSVRowArray,
+  DSVRowString,
+  max,
+  scaleBand,
+  scaleLinear,
+} from 'd3';
 import AxisLeft from '../components/AxisLeft';
 import AxisBottom from '../components/AxisBottom';
 import Marks from '../components/Marks';
@@ -27,6 +34,9 @@ export default function Home({ data }: { data: DSVRowArray<string> }) {
 
     const xScale = scaleBand().domain(data.map(xValue)).range([0, innerWidth]);
 
+    const tooltipFormat = (d: DSVRowString<string>) =>
+      `Cobertura vacinal \n em ${xValue(d)}: ${yValue(d)}%`;
+
     return (
       <ChartContainer>
         <Head>
@@ -51,6 +61,7 @@ export default function Home({ data }: { data: DSVRowArray<string> }) {
               data={data}
               xValue={xValue}
               yValue={yValue}
+              tooltipFormat={tooltipFormat}
             />
           </g>
         </svg>
