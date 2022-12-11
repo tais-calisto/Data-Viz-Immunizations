@@ -13,6 +13,14 @@ export const ChartContainer = styled.div`
     }
     text {
       fill: #635f5d;
+      text-anchor: middle;
+    }
+    .title {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .vertical-text {
+      writing-mode: vertical-lr;
     }
   }
 `;

@@ -26,7 +26,11 @@ const Marks = ({
             y={yScale(yValue(d))}
             width={xScale.bandwidth() / 1.3}
             height={innerHeight - yScale(+d['Coberturas Vacinais'])}
-          ></rect>
+          >
+            <title>
+              Cobertura vacinal no ano {xValue(d)}: {yValue(d)}%
+            </title>
+          </rect>
         ) : (
           ''
         )

@@ -7,10 +7,10 @@ import Marks from '../components/Marks';
 import { ChartContainer } from '../styles/BarChart';
 
 export default function Home({ data }: { data: DSVRowArray<string> }) {
-  const width = 1250;
+  const width = 1200;
   const height = 560;
 
-  const margin = { top: 40, right: 40, bottom: 40, left: 80 };
+  const margin = { top: 40, right: 40, bottom: 80, left: 80 };
 
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
@@ -41,6 +41,9 @@ export default function Home({ data }: { data: DSVRowArray<string> }) {
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             <AxisLeft yScale={yScale} innerWidth={innerWidth} />
             <AxisBottom xScale={xScale} innerHeight={innerHeight} />
+            <text className={'title'} x={margin.right + 15}>
+              Cobertura Vacinal
+            </text>
             <Marks
               innerHeight={innerHeight}
               xScale={xScale}
