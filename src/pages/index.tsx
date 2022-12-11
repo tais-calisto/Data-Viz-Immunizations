@@ -1,8 +1,11 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { csv, max, min, scaleBand, scaleLinear } from 'd3';
+import { csv, DSVRowArray, max, scaleBand, scaleLinear } from 'd3';
+import AxisLeft from '../components/AxisLeft';
+import AxisBottom from '../components/AxisBottom';
+import Marks from '../components/Marks';
 
-export default function Home({ data }: { data: d3.DSVRowArray<string> }) {
+export default function Home({ data }: { data: DSVRowArray<string> }) {
   const width = 900;
   const height = 560;
 
@@ -14,20 +17,14 @@ export default function Home({ data }: { data: d3.DSVRowArray<string> }) {
   if (!data.length) {
     return;
   } else {
+    const xValue = (d: any) => d.Ano;
+    const yValue = (d: any) => d['Coberturas Vacinais'];
+
     const yScale = scaleLinear()
-      .domain([
-        min(data, (d) =>
-          d['Coberturas Vacinais'] ? +d['Coberturas Vacinais'] - 1 : 0
-        ) as number,
-        max(data, (d) =>
-          d['Coberturas Vacinais'] ? +d['Coberturas Vacinais'] + 1 : 0
-        ) as number,
-      ])
+      .domain([0, max(data, yValue)])
       .range([innerHeight, 0]);
 
-    const xScale = scaleBand()
-      .domain(data.map((d) => d.Ano as string))
-      .range([0, innerWidth]);
+    const xScale = scaleBand().domain(data.map(xValue)).range([0, innerWidth]);
 
     return (
       <>
@@ -38,38 +35,19 @@ export default function Home({ data }: { data: d3.DSVRowArray<string> }) {
         <h1>Cobertura vacinal no Brasil desde 1994</h1>
 
         <h2>Cobertura vacinal total por ano</h2>
+
         <svg width={width} height={height}>
           <g transform={`translate(${margin.left}, ${margin.top})`}>
-            {yScale.ticks().map((tickValue, index) => (
-              <g key={index} transform={`translate(0, ${yScale(tickValue)})`}>
-                <line x2={innerWidth} stroke='black' />
-                <text style={{ textAnchor: 'end' }} x={'-0.2em'}>
-                  {tickValue}%
-                </text>
-              </g>
-            ))}
-
-            {xScale.domain().map((domain, index) => (
-              <g key={index} transform={`translate(${xScale(domain)},0)`}>
-                <text y={innerHeight} style={{ textAnchor: 'middle' }} dy='1em'>
-                  {domain}
-                </text>
-              </g>
-            ))}
-
-            {data.map((d, index) =>
-              d['Coberturas Vacinais'] && d.Ano ? (
-                <rect
-                  key={index}
-                  x={xScale(d.Ano)}
-                  y={yScale(+d['Coberturas Vacinais'])}
-                  width={xScale.bandwidth()}
-                  height={innerHeight - yScale(+d['Coberturas Vacinais'])}
-                ></rect>
-              ) : (
-                ''
-              )
-            )}
+            <AxisLeft yScale={yScale} innerWidth={innerWidth} />
+            <AxisBottom xScale={xScale} innerHeight={innerHeight} />
+            <Marks
+              innerHeight={innerHeight}
+              xScale={xScale}
+              yScale={yScale}
+              data={data}
+              xValue={xValue}
+              yValue={yValue}
+            />
           </g>
         </svg>
       </>
