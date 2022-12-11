@@ -1,15 +1,15 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { csv, max, min, scaleBand, ScaleLinear, scaleLinear } from 'd3';
+import { csv, max, min, scaleBand, scaleLinear } from 'd3';
 
 export default function Home({ data }: { data: d3.DSVRowArray<string> }) {
   const width = 900;
   const height = 560;
 
-  const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+  const margin = { top: 40, right: 40, bottom: 40, left: 80 };
 
   const innerHeight = height - margin.top - margin.bottom;
-  const innerWidth = height - margin.left - margin.right;
+  const innerWidth = width - margin.left - margin.right;
 
   if (!data.length) {
     return;
@@ -40,6 +40,23 @@ export default function Home({ data }: { data: d3.DSVRowArray<string> }) {
         <h2>Cobertura vacinal total por ano</h2>
         <svg width={width} height={height}>
           <g transform={`translate(${margin.left}, ${margin.top})`}>
+            {yScale.ticks().map((tickValue, index) => (
+              <g key={index} transform={`translate(0, ${yScale(tickValue)})`}>
+                <line x2={innerWidth} stroke='black' />
+                <text style={{ textAnchor: 'end' }} x={'-0.2em'}>
+                  {tickValue}%
+                </text>
+              </g>
+            ))}
+
+            {xScale.domain().map((domain, index) => (
+              <g key={index} transform={`translate(${xScale(domain)},0)`}>
+                <text y={innerHeight} style={{ textAnchor: 'middle' }} dy='1em'>
+                  {domain}
+                </text>
+              </g>
+            ))}
+
             {data.map((d, index) =>
               d['Coberturas Vacinais'] && d.Ano ? (
                 <rect
@@ -47,7 +64,7 @@ export default function Home({ data }: { data: d3.DSVRowArray<string> }) {
                   x={xScale(d.Ano)}
                   y={yScale(+d['Coberturas Vacinais'])}
                   width={xScale.bandwidth()}
-                  height={height - yScale(+d['Coberturas Vacinais'])}
+                  height={innerHeight - yScale(+d['Coberturas Vacinais'])}
                 ></rect>
               ) : (
                 ''
