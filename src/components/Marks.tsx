@@ -20,21 +20,17 @@ const Marks = ({
 }) => {
   return (
     <>
-      {data.map((d, index) =>
-        d['Coberturas Vacinais'] && d.Ano ? (
-          <rect
-            key={index}
-            x={xScale(xValue(d))}
-            y={yScale(yValue(d))}
-            width={xScale.bandwidth() / 1.3}
-            height={innerHeight - yScale(+d['Coberturas Vacinais'])}
-          >
-            <title>{tooltipFormat(d)}</title>
-          </rect>
-        ) : (
-          ''
-        )
-      )}
+      {data.map((d, index) => (
+        <rect
+          key={index}
+          x={xScale(xValue(d))}
+          y={yScale(yValue(d))}
+          width={xScale.bandwidth() / 1.3}
+          height={innerHeight - yScale(yValue(d))}
+        >
+          <title>{tooltipFormat(d)}</title>
+        </rect>
+      ))}
     </>
   );
 };
