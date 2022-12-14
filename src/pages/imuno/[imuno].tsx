@@ -18,8 +18,6 @@ const ImunoByYear = ({ data }: { data: DSVRowArray<string> }) => {
   const xValue = (d: any) => d.Ano;
   const yValue = (d: any) => d.Imuno;
 
-  console.log(min(data, yValue));
-
   const yScale = scaleLinear()
     .domain([min(data, yValue), max(data, yValue)])
     .range([innerHeight, 0])
@@ -31,6 +29,8 @@ const ImunoByYear = ({ data }: { data: DSVRowArray<string> }) => {
 
   const tooltipFormat = (d: DSVRowString) =>
     `Cobertura vacinal \n em ${xValue(d)}: ${yValue(d)}%`;
+
+  const ticks = data.length;
 
   return (
     <ChartContainer>
@@ -44,7 +44,11 @@ const ImunoByYear = ({ data }: { data: DSVRowArray<string> }) => {
 
       <svg width={width} height={height}>
         <g transform={`translate(${margin.left}, ${margin.top})`}>
-          <AxisBottomLinear xScale={xScale} innerHeight={innerHeight} />
+          <AxisBottomLinear
+            xScale={xScale}
+            innerHeight={innerHeight}
+            ticks={ticks - 1}
+          />
           <AxisLeft yScale={yScale} innerWidth={innerWidth} />
           <Lines
             data={data}
@@ -77,6 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const row = (d: any) => {
     d.Imuno = +d[value];
+    d.Ano = +d.Ano;
     return d;
   };
 

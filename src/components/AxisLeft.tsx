@@ -14,7 +14,7 @@ const AxisLeft = ({
         return (
           <g key={index} transform={`translate(0, ${yScale(tickValue)})`}>
             <line x2={innerWidth} />
-            <text style={{ textAnchor: 'end' }} x={'-0.2em'}>
+            <text style={{ textAnchor: 'end' }} x={'-1em'}>
               {tickValue}%
             </text>
           </g>

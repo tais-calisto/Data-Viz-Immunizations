@@ -5,7 +5,6 @@ const Lines = ({
   data,
   xScale,
   yScale,
-  innerHeight,
   yValue,
   xValue,
   tooltipFormat,
@@ -21,19 +20,12 @@ const Lines = ({
   return (
     <>
       <path
-        fill='none'
-        stroke='black'
         d={line()
           .x((d) => xScale(xValue(d)))
           .y((d) => yScale(yValue(d)))(data)}
       />
       {data.map((d, index) => (
-        <circle
-          key={index}
-          cx={xScale(xValue(d))}
-          cy={yScale(yValue(d))}
-          r={10}
-        >
+        <circle key={index} cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={5}>
           <title>{tooltipFormat(d)}</title>
         </circle>
       ))}

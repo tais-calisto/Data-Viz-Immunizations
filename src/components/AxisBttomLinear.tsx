@@ -4,23 +4,18 @@ import React from 'react';
 const AxisBottomLinear = ({
   xScale,
   innerHeight,
+  ticks,
 }: {
   xScale: ScaleLinear<number, number, never>;
   innerHeight: number;
+  ticks: number;
 }) => {
-  console.log(xScale.ticks());
-
   return (
     <>
-      {xScale.ticks().map((tickValue, index) => {
+      {xScale.ticks(ticks).map((tickValue, index) => {
         return (
           <g key={index} transform={`translate(${xScale(tickValue)},0)`}>
-            <text
-              className='vertical-text'
-              y={innerHeight}
-              dy='1.5em'
-              dx={'1em'}
-            >
+            <text className='vertical-text' y={innerHeight} dy='2em'>
               {tickValue}
             </text>
           </g>

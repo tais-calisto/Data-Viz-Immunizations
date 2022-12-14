@@ -12,7 +12,12 @@ const AxisBottom = ({
     <>
       {xScale.domain().map((domain, index) => (
         <g key={index} transform={`translate(${xScale(domain)},0)`}>
-          <text className='vertical-text' y={innerHeight} dy='1.5em' dx={'1em'}>
+          <text
+            className='vertical-text'
+            y={innerHeight}
+            dy='1.5em'
+            dx={'0.7em'}
+          >
             {domain}
           </text>
         </g>

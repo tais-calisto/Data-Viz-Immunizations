@@ -4,7 +4,8 @@ import '@fontsource/poppins';
 export const ChartContainer = styled.div`
   font-family: 'Poppins', sans-serif;
   svg {
-    rect {
+    rect,
+    circle {
       fill: #8e6c8a;
     }
     line {
@@ -21,6 +22,11 @@ export const ChartContainer = styled.div`
     }
     .vertical-text {
       writing-mode: vertical-lr;
+    }
+    path {
+      fill: none;
+      stroke: #8e6c8a;
+      stroke-width: 5px;
     }
   }
 `;
