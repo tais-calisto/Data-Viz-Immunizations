@@ -19,13 +19,15 @@ const Lines = ({
   tooltipFormat: (d: any) => string;
   lineData: [number, number][];
 }) => {
+  const pathLine: any = lineData
+    ? line()
+        .x((d) => xScale(xValue(d)))
+        .y((d) => yScale(yValue(d)))
+    : '';
+
   return (
     <>
-      <path
-        d={line()
-          .x((d) => xScale(xValue(d)))
-          .y((d) => yScale(yValue(d)))(lineData)}
-      />
+      <path d={pathLine(lineData)} />
       {data.map((d, index) => (
         <circle key={index} cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={2}>
           <title>{tooltipFormat(d)}</title>
