@@ -6,7 +6,15 @@ import AxisLeft from '../../components/AxisLeft';
 import Lines from '../../components/Lines';
 import { ChartContainer } from '../../styles/BarChart';
 
-const ImunoByYear = ({ data }: { data: DSVRowArray<string> }) => {
+const ImunoByYear = ({
+  data,
+  lineData,
+}: {
+  data: DSVRowArray<string>;
+  lineData: [number, number][];
+}) => {
+  console.log(lineData);
+
   const width = 1200;
   const height = 560;
 
@@ -52,6 +60,7 @@ const ImunoByYear = ({ data }: { data: DSVRowArray<string> }) => {
           <AxisLeft yScale={yScale} innerWidth={innerWidth} />
           <Lines
             data={data}
+            lineData={lineData}
             innerHeight={innerHeight}
             tooltipFormat={tooltipFormat}
             xScale={xScale}
@@ -87,5 +96,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const data = await csv(csvUrl, row);
 
-  return { props: { data } };
+  const lineData: { Ano: number; Imuno: number }[] = [];
+  data.map((d) => {
+    if (d.Ano && d.Imuno) lineData.push({ Ano: +d.Ano, Imuno: +d.Imuno });
+  });
+
+  return { props: { data, lineData } };
 };

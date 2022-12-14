@@ -26,6 +26,8 @@ export const ChartContainer = styled.div`
     path {
       fill: none;
       stroke: #8e6c8a;
+      stroke-linejoin: round;
+      stroke-linecap: round;
       stroke-width: 5px;
     }
   }

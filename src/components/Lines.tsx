@@ -8,6 +8,7 @@ const Lines = ({
   yValue,
   xValue,
   tooltipFormat,
+  lineData,
 }: {
   data: DSVRowArray;
   yScale: ScaleLinear<number, number, never>;
@@ -16,16 +17,17 @@ const Lines = ({
   yValue: (data: any) => number;
   xValue: (d: any) => number;
   tooltipFormat: (d: any) => string;
+  lineData: [number, number][];
 }) => {
   return (
     <>
       <path
         d={line()
           .x((d) => xScale(xValue(d)))
-          .y((d) => yScale(yValue(d)))(data)}
+          .y((d) => yScale(yValue(d)))(lineData)}
       />
       {data.map((d, index) => (
-        <circle key={index} cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={5}>
+        <circle key={index} cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={2}>
           <title>{tooltipFormat(d)}</title>
         </circle>
       ))}
